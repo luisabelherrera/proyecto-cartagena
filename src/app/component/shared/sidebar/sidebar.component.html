@@ -1,0 +1,51 @@
+<aside class="sidebar" *ngIf="isRoleLoaded">
+  <div class="logo">
+    <span>CORRALITO</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+      <i class="fas fa-tachometer-alt nav-icon"></i>
+      <span>DASHBOARD</span>
+    </a>
+
+    <!-- ADMINISTRADOR -->
+    <a routerLink="/admin" routerLinkActive="active" class="nav-item" *ngIf="isAdmin()">
+      <i class="fas fa-users nav-icon"></i>
+      <span>USUARIOS</span>
+    </a>
+    <a routerLink="/admin" routerLinkActive="active" class="nav-item" *ngIf="isAdmin()">
+      <i  class="fas fa-university nav-icon"></i>
+      <span>ENTE REGULADOR</span>
+    </a>
+    <a routerLink="/comercio" routerLinkActive="active" class="nav-item" *ngIf="isAdmin()">
+      <i class="fas fa-store nav-icon"></i>
+      <span>COMERCIO</span>
+    </a>
+    <a routerLink="/turista" routerLinkActive="active" class="nav-item" *ngIf="isAdmin()">
+      <i class="fas fa-suitcase nav-icon"></i>
+      <span>TURISTA</span>
+    </a>
+
+    <!--  ENTE REGULADOR -->
+    <a routerLink="/ente-regulador" routerLinkActive="active" class="nav-item" *ngIf="isEnteRegulador() ">
+      <i class="fas fa-box-open nav-icon"></i>
+      <span>PRODUCTOS</span>
+    </a>
+    <a routerLink="/categorias" routerLinkActive="active" class="nav-item" *ngIf="isEnteRegulador()">
+      <i class="fas fa-tags nav-icon"></i>
+      <span>CATEGORIAS</span>
+    </a>
+    <a routerLink="/zonas" routerLinkActive="active" class="nav-item" *ngIf="isEnteRegulador() ">
+      <i class="fas fa-map-marker-alt nav-icon"></i>
+      <span>ZONAS</span>
+    </a>
+  </nav>
+
+  <div class="logout-section">
+    <button class="logout-btn" (click)="logout()">
+      <i class="fas fa-sign-out-alt nav-icon"></i>
+      <span>CERRAR SESIÓN</span>
+    </button>
+  </div>
+  
+</aside>

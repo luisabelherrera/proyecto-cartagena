@@ -1,0 +1,151 @@
+<div class="app-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="admin-container">
+    <div class="admin-header">
+      <h2>Ente Regulador</h2>
+      <div class="search-container">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" placeholder="Search for something" />
+        </div>
+        <div class="header-icons">
+          <button class="icon-button"><i class="fas fa-cog"></i></button>
+          <button class="icon-button"><i class="fas fa-bell"></i></button>
+          <div class="user-avatar">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e3c8b778-30de-4cb0-90d1-2126eab0e137.jpg-IVYiwRfgBn206dnWbII1DEKvtfwKcS.jpeg"
+              alt="User"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="new-user-btn" (click)="openAddProductModal()">+ NUEVO PRODUCTO</button>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th class="column-number">#</th>
+            <th class="column-id" (click)="toggleSort('id')">
+              ID
+              <div class="sort-icons">
+                <i class="fas fa-sort-up" [class.active]="sortColumn === 'id' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" [class.active]="sortColumn === 'id' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th class="column-name" (click)="toggleSort('name')">
+              Nombre
+              <div class="sort-icons">
+                <i class="fas fa-sort-up" [class.active]="sortColumn === 'name' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" [class.active]="sortColumn === 'name' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th class="column-min-price" (click)="toggleSort('minPrice')">
+              Precio Min
+              <div class="sort-icons">
+                <i class="fas fa-sort-up" [class.active]="sortColumn === 'minPrice' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" [class.active]="sortColumn === 'minPrice' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th class="column-max-price" (click)="toggleSort('maxPrice')">
+              Precio Max
+              <div class="sort-icons">
+                <i class="fas fa-sort-up" [class.active]="sortColumn === 'maxPrice' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" [class.active]="sortColumn === 'maxPrice' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th class="column-zone" (click)="toggleSort('zone')">
+              Zona
+              <div class="sort-icons">
+                <i class="fas fa-sort-up" [class.active]="sortColumn === 'zone' && sortDirection === 'asc'"></i>
+                <i class="fas fa-sort-down" [class.active]="sortColumn === 'zone' && sortDirection === 'desc'"></i>
+              </div>
+            </th>
+            <th class="column-actions"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of paginatedProducts; let i = index">
+            <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.minPrice }}</td>
+            <td>{{ product.maxPrice }}</td>
+            <td>{{ product.zone }}</td>
+            <td class="actions-cell">
+              <button class="action-btn view-btn" (click)="viewProduct(product.id)">
+                <i class="fas fa-external-link-alt"></i>
+              </button>
+              <button class="action-btn edit-btn" (click)="editProduct(product)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="action-btn delete-btn" (click)="deleteProduct(product.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <div class="pagination-info">{{ paginationInfo }}</div>
+        <div class="pagination-controls">
+          <button class="pagination-btn" [disabled]="currentPage === 1" (click)="prevPage()">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button
+            *ngFor="let page of getPages()"
+            class="pagination-btn"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+          <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-backdrop" (click)="closeModal()"></div>
+      <div class="modal-content">
+        <h3>{{ editMode ? 'Editar Producto' : 'Nuevo Producto' }}</h3>
+        <form (ngSubmit)="saveProduct()">
+          <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" id="id" [(ngModel)]="selectedProduct.id" name="id" required [disabled]="editMode" />
+          </div>
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" [(ngModel)]="selectedProduct.name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="minPrice">Precio Mínimo:</label>
+            <input type="number" id="minPrice" [(ngModel)]="selectedProduct.minPrice" name="minPrice" />
+          </div>
+          <div class="form-group">
+            <label for="maxPrice">Precio Máximo:</label>
+            <input type="number" id="maxPrice" [(ngModel)]="selectedProduct.maxPrice" name="maxPrice" />
+          </div>
+          <div class="form-group">
+            <label for="zone">Zona:</label>
+            <select id="zone" [(ngModel)]="selectedProduct.zone" name="zone">
+              <option value="">Selecciona una zona</option>
+              <option value="Comida">Comida</option>
+              <option value="Servicios">Servicios</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="btn-primary">Guardar</button>
+            <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

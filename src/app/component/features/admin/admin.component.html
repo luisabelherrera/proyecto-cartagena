@@ -1,0 +1,121 @@
+<div class="app-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="admin-container">
+    <div class="admin-header">
+      <h2>Administrador</h2>
+      <div class="search-container">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" placeholder="Search for something" />
+        </div>
+        <div class="header-icons">
+          <button class="icon-button"><i class="fas fa-cog"></i></button>
+          <button class="icon-button"><i class="fas fa-bell"></i></button>
+          <div class="user-avatar">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e3c8b778-30de-4cb0-90d1-2126eab0e137.jpg-IVYiwRfgBn206dnWbII1DEKvtfwKcS.jpeg" alt="User" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="new-user-btn" (click)="openAddUserModal()">+ NUEVO USUARIO</button>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th class="column-number">#</th>
+            <th class="column-id">
+              ID
+              <div class="sort-icons">
+                <i class="fas fa-sort-up"></i>
+                <i class="fas fa-sort-down"></i>
+              </div>
+            </th>
+            <th class="column-usuario">
+              usuario
+              <div class="sort-icons">
+                <i class="fas fa-sort-up"></i>
+                <i class="fas fa-sort-down"></i>
+              </div>
+            </th>
+            <th class="column-perfil">
+              perfil
+              <div class="sort-icons">
+                <i class="fas fa-sort-up"></i>
+                <i class="fas fa-sort-down"></i>
+              </div>
+            </th>
+            <th class="column-actions"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of paginatedUsers; let i = index">
+            <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+            <td>{{ user.id }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td class="actions-cell">
+              <button class="action-btn view-btn"><i class="fas fa-external-link-alt"></i></button>
+              <button class="action-btn edit-btn" (click)="editUser(user)"><i class="fas fa-edit"></i></button>
+              <button class="action-btn delete-btn" (click)="deleteUser(user.id)"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <div class="pagination-info">
+          /Page
+        </div>
+        <div class="pagination-controls">
+          <button class="pagination-btn" [disabled]="currentPage === 1" (click)="prevPage()">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button 
+            *ngFor="let page of getPages()" 
+            class="pagination-btn" 
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+          <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-backdrop" (click)="closeModal()"></div>
+      <div class="modal-content">
+        <h3>{{ editMode ? 'Editar Usuario' : 'Nuevo Usuario' }}</h3>
+        <form (ngSubmit)="saveUser()">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" [(ngModel)]="selectedUser.email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" [(ngModel)]="selectedUser.password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="role">Perfil:</label>
+            <select id="role" [(ngModel)]="selectedUser.role" name="role" required>
+              <option value="Administrador">Administrador</option>
+              <option value="Ente Regulador">Ente Regulador</option>
+              <option value="Comercio">Comercio</option>
+              <option value="Turista">Turista</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="btn-primary">Guardar</button>
+            <button type="button" class="btn-secondary" (click)="closeModal()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

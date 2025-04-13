@@ -1,0 +1,32 @@
+<header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <img [src]="imgSrc" alt="Escudo de Cartagena" class="logo">
+          <span>Alcaldía de Cartagena</span>
+        </div>
+        
+        <nav [class.active]="isMenuOpen">
+          <ul>
+            <li><a routerLink="/home" routerLinkActive="active">Inicio</a></li>
+            <li><a routerLink="/services" routerLinkActive="active">Servicios</a></li>
+            <li><a routerLink="/news" routerLinkActive="active">Noticias</a></li>
+            <li><a routerLink="/about" routerLinkActive="active">Acerca de</a></li>
+            <li><a routerLink="/contact" routerLinkActive="active">Contacto</a></li>
+          </ul>
+        </nav>
+        
+        <div class="header-actions">
+
+   
+          <button class="back-button" (click)="goBack()" aria-label="Volver al Login">
+            <i></i>
+            <span>Login</span>
+          </button>
+          <button class="menu-toggle" (click)="toggleMenu()">
+            <i class="fa-solid" [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>

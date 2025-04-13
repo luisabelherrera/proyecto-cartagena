@@ -1,0 +1,91 @@
+<app-header-home></app-header-home>
+
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Bienvenido a la Plataforma de Cartagena</h1>
+      <p>Tu portal para servicios ciudadanos, trámites y más</p>
+      <button class="cta-button">Explorar Servicios</button>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Nuestros Servicios</h2>
+      
+      <div class="feature-grid">
+        <div class="feature-card" *ngFor="let item of featuredItems">
+          <div class="icon-container">
+            <i [class]="item.icon"></i>
+          </div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+          <a href="#" class="feature-link">Ver más</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div class="container">
+      <div class="info-content">
+        <h2>Cartagena Digital</h2>
+        <p>Estamos transformando la manera en que los ciudadanos interactúan con los servicios municipales. Nuestra plataforma ofrece soluciones digitales para facilitar trámites, acceder a información y participar en la comunidad.</p>
+        <button class="secondary-button">Conoce más</button>
+      </div>
+      <div class="info-image">
+        <img src="assets/images/cartagena-view.jpg" alt="Vista de Cartagena">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img [src]="imgSrc" alt="Escudo de Cartagena" alt="Escudo de Cartagena" class="footer-logo-img">
+        <p>Alcaldía de Cartagena</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="link-group">
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="#">Trámites</a></li>
+            <li><a href="#">Pagos en línea</a></li>
+            <li><a href="#">Certificados</a></li>
+          </ul>
+        </div>
+        
+        <div class="link-group">
+          <h4>Información</h4>
+          <ul>
+            <li><a href="#">Noticias</a></li>
+            <li><a href="#">Eventos</a></li>
+            <li><a href="#">Turismo</a></li>
+          </ul>
+        </div>
+        
+        <div class="link-group">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="#">Directorio</a></li>
+            <li><a href="#">PQRS</a></li>
+            <li><a href="#">Mapa del sitio</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Alcaldía de Cartagena. Todos los derechos reservados.</p>
+      <div class="social-links">
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
